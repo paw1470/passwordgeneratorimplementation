@@ -22,9 +22,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>pl.dominisz</groupId>
+            <groupId>pl.agaStupak</groupId>
             <artifactId>passwordgeneratorapi</artifactId>
-            <version>1.0</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

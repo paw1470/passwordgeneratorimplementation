@@ -1,11 +1,8 @@
-package pl.dominisz.passwordgeneratorimplementation;
+package pl.agaStupak.passwordgeneratorimplementation;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-import pl.dominisz.passwordgeneratorapi.PasswordGeneratorParameters;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.agaStupak.passwordgeneratorapi.PasswordGeneratorParameters;
 
 class PasswordGeneratorImplementationTest {
 
@@ -35,7 +32,7 @@ class PasswordGeneratorImplementationTest {
         String password = passwordGeneratorImplementation.generate(passwordGeneratorParameters);
 
         Assertions.assertEquals(10, password.length());
-        Assertions.assertEquals(password, password.toLowerCase());
+        Assertions.assertTrue(containsOnlyLowercaseChar(password));
     }
 
     @Test
@@ -54,7 +51,7 @@ class PasswordGeneratorImplementationTest {
         String password = passwordGeneratorImplementation.generate(passwordGeneratorParameters);
 
         Assertions.assertEquals(10, password.length());
-        Assertions.assertEquals(password, password.toUpperCase());
+        Assertions.assertTrue(containsOnlyUppercaseChar(password));
     }
 
     @Test
@@ -83,7 +80,30 @@ class PasswordGeneratorImplementationTest {
         Assertions.assertTrue(containsOnlyNumbers(password));
     }
 
+    @Test
+    void shouldContainNumbersSpecialCharUppercaseLowercase(){
+        PasswordGeneratorParameters passwordGeneratorParameters = new PasswordGeneratorParameters();
+        passwordGeneratorParameters.setIncludeNumbers(true);
+        passwordGeneratorParameters.setIncludeSymbols(true);
+        passwordGeneratorParameters.setIncludeUppercaseCharacters(true);
+        passwordGeneratorParameters.setIncludeLowercaseCharacters(true);
+        passwordGeneratorParameters.setPasswordLength(10);
+
+        String password = passwordGeneratorImplementation.generate(passwordGeneratorParameters);
+
+
+    }
+
     private boolean containsOnlyNumbers(String password) {
         return password.matches("[0-9]+");
+    }
+
+    private boolean containsOnlyUppercaseChar(String password) {
+        return password.matches("[A-Z]+");
+    }
+    private boolean containsOnlyLowercaseChar(String password) {
+        return password.matches("[a-z]+");
+
+
     }
 }

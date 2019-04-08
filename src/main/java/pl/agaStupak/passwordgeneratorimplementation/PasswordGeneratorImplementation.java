@@ -1,7 +1,7 @@
-package pl.dominisz.passwordgeneratorimplementation;
+package pl.agaStupak.passwordgeneratorimplementation;
 
-import pl.dominisz.passwordgeneratorapi.PasswordGeneratorParameters;
-import pl.dominisz.passwordgeneratorapi.PasswordGeneratorService;
+import pl.agaStupak.passwordgeneratorapi.PasswordGeneratorParameters;
+import pl.agaStupak.passwordgeneratorapi.PasswordGeneratorService;
 
 import java.util.List;
 import java.util.Random;
@@ -19,9 +19,10 @@ public class PasswordGeneratorImplementation implements PasswordGeneratorService
             throw new IllegalArgumentException();
         }
         String alphabet = generateAlphabet(passwordGeneratorParameters);
-        String password = "";
-        for (int i = 0; i < passwordGeneratorParameters.getPasswordLength(); i++) {
-            password += alphabet.charAt(RANDOM.nextInt(alphabet.length()));
+        String password = generateRequiredTypes(passwordGeneratorParameters);
+        int passwordLen = password.length();
+        for (int i = 0; i < passwordGeneratorParameters.getPasswordLength() -passwordLen; i++) {
+            password += getRandomChar(alphabet);
         }
         return password;
     }
@@ -42,6 +43,28 @@ public class PasswordGeneratorImplementation implements PasswordGeneratorService
         }
         return alphabet;
     }
+
+    private String generateRequiredTypes(PasswordGeneratorParameters passwordGeneratorParameters) {
+        String password = "";
+        if(passwordGeneratorParameters.isIncludeLowercaseCharacters()){
+            password += getRandomChar(LOWERCASE_CHARACTERS);
+        }
+        if(passwordGeneratorParameters.isIncludeUppercaseCharacters()){
+            password += getRandomChar(UPPERCASE_CHARACTERS);
+        }
+        if(passwordGeneratorParameters.isIncludeSymbols()){
+            password += getRandomChar(SYMBOLS);
+        }
+        if(passwordGeneratorParameters.isIncludeNumbers()){
+            password += getRandomChar(NUMBERS);
+        }
+        return password;
+    }
+
+    private char getRandomChar(String alphabet) {
+        return alphabet.charAt(RANDOM.nextInt(alphabet.length()));
+    }
+
 
     private boolean isInvalid(PasswordGeneratorParameters passwordGeneratorParameters) {
         return passwordGeneratorParameters.getPasswordLength() <= 0
